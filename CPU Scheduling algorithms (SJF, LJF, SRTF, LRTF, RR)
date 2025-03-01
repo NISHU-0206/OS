@@ -1,0 +1,410 @@
+def sjf():
+    n=int(input(""))
+    PATBT=[]
+
+    for i in range(n):
+        a=int(input(""))
+        b=int(input(""))
+        l=[int(i),int(a),int(b)]
+        PATBT.append(l)
+
+    for i in range(n):
+        for j in range(n-i-1):
+            if PATBT[j][1]>PATBT[j+1][1]:
+                PATBT[j][0],PATBT[j+1][0]=PATBT[j+1][0],PATBT[j][0]
+                PATBT[j][1],PATBT[j+1][1]=PATBT[j+1][1],PATBT[j][1]
+                PATBT[j][2],PATBT[j+1][2]=PATBT[j+1][2],PATBT[j][2]
+
+    CT=[[0,0]]*n
+
+    ab=PATBT[0][1]+PATBT[0][2]
+    ct=[PATBT[0][0],ab]
+    CT[0]=ct
+
+    for i in range(1,n): 
+        for j in range(1,n-i):
+            if(PATBT[j][2]>=PATBT[j+1][2]):
+                PATBT[j][0],PATBT[j+1][0]=PATBT[j+1][0],PATBT[j][0]
+                PATBT[j][1],PATBT[j+1][1]=PATBT[j+1][1],PATBT[j][1]
+                PATBT[j][2],PATBT[j+1][2]=PATBT[j+1][2],PATBT[j][2]
+    PATBT2=PATBT.copy()
+    PATBT2.pop(0)
+
+    for i in range(0,len(PATBT2)):
+        if(CT[i][1]>PATBT2[i][1]):
+            c=int(CT[i][1]) + int(PATBT2[i][2])
+            li=[int(PATBT2[i][0]),int(c)]
+            CT[i+1]=li
+        else:
+            CT[i+1][0],CT[i+1][1]=PATBT2[i][0],PATBT2[i][1]+PATBT2[i][2]
+
+    CT.sort()
+
+    for i in range(n):
+        print(CT[i][1],end=" ")
+
+    TAT=[0]*n
+    WT=[0]*n
+
+    print()
+
+    for i in range(n):
+        for j in range(n):
+            if (CT[i][0]==PATBT[j][0]):
+                TAT[i]=CT[i][1]-PATBT[j][1]
+
+    for i in range(n):
+        print(TAT[i],end=" ")
+
+    print()
+    for i in range(n):
+        for j in range(n):
+            if (CT[i][0]==PATBT[j][0]):
+                WT[i]=TAT[i]-PATBT[j][2]
+
+    for i in range(n):
+        print(WT[i],end=" ")
+
+    tCT=tTAT=tWT=0
+
+    for i in range(n):
+        tCT=tCT+CT[i][1]
+        tTAT=tTAT+TAT[i]
+        tWT=tWT+WT[i]
+
+    print()
+    print(round((tCT/n),2))
+    print(round((tTAT/n),2))
+    print(round((tWT/n),2))
+
+def ljf():
+    n=int(input(""))
+    PATBT=[]
+
+    for i in range(n):
+        a=int(input(""))
+        b=int(input(""))
+        l=[int(i),int(a),int(b)]
+        PATBT.append(l)
+
+    for i in range(n):
+        for j in range(n-i-1):
+            if PATBT[j][1]>PATBT[j+1][1]:
+                PATBT[j][0],PATBT[j+1][0]=PATBT[j+1][0],PATBT[j][0]
+                PATBT[j][1],PATBT[j+1][1]=PATBT[j+1][1],PATBT[j][1]
+                PATBT[j][2],PATBT[j+1][2]=PATBT[j+1][2],PATBT[j][2]
+    CT=[[0,0]]*n
+
+    ab=PATBT[0][1]+PATBT[0][2]
+    ct=[PATBT[0][0],ab]
+    CT[0]=ct
+
+    for i in range(1,n):
+       for j in range(1,n-i):
+            if(PATBT[j][2]>=PATBT[j+1][2]):
+                PATBT[j][0],PATBT[j+1][0]=PATBT[j+1][0],PATBT[j][0]
+                PATBT[j][1],PATBT[j+1][1]=PATBT[j+1][1],PATBT[j][1]
+                PATBT[j][2],PATBT[j+1][2]=PATBT[j+1][2],PATBT[j][2]
+
+    PATBT.reverse()
+    PATBT2=PATBT.copy()
+    PATBT2.pop()
+
+    for i in range(0,len(PATBT2)):
+        if(CT[i][1]>PATBT2[i][1]):
+            c=CT[i][1]+PATBT2[i][2]
+            li=[int(PATBT2[i][0]),int(c)]
+            CT[i+1]=li
+        else:
+            CT[i+1][0],CT[i+1][1]=PATBT2[i][0],PATBT2[i][1]+PATBT2[i][2]        
+
+    CT.sort()
+
+    for i in range(n):
+        print(CT[i][1],end=" ")
+
+    TAT=[0]*n
+    WT=[0]*n
+
+    print()
+    PATBT.sort()
+
+    for i in range(0,len(PATBT)):
+        TAT[i]=CT[i][1]-PATBT[i][1]
+
+    for i in range(n):
+        print(TAT[i],end=" ")
+
+    print()
+    for i in range(n):
+        for j in range(len(PATBT)):
+            if (CT[i][0]==PATBT[j][0]):
+                WT[i]=TAT[i]-PATBT[j][2]
+
+    for i in range(n):
+        print(WT[i],end=" ")
+
+    tCT=tTAT=tWT=0
+
+    for i in range(n):
+        tCT=tCT+CT[i][1]
+        tTAT=tTAT+TAT[i]
+        tWT=tWT+WT[i]
+
+    print()
+    print(round((tCT/n),2))
+    print(round((tTAT/n),2))
+    print(round((tWT/n),2))
+
+def srtf():
+    n=int(input(""))
+    PATBT=[]
+
+    for i in range(n):
+        a=int(input(""))
+        b=int(input(""))
+        l=[int(a),int(b),int(i)]
+        PATBT.append(l)             #[BT,AT,id]
+
+    BT=[]
+    for i in range(n):
+        BT.append(PATBT[i][0])
+    BTATP=list(PATBT)
+    CT=[[0,0]]*n
+    TAT=[0]*n
+    WT=[0]*n
+    current_time=0
+
+    while (PATBT != []):
+        available=[]
+        for i in PATBT:
+            if (i[1]<=current_time):
+                available.append(i)
+
+        if (available==[]):
+            current_time=current_time+1
+            continue
+
+        else:
+            available.sort()            #sorting on the basis of BT.
+
+            current_process=available[0]
+            copy_current_process=available.pop(0)
+            current_time=current_time+1
+            current_process[0]=current_process[0]-1
+            PATBT.remove(copy_current_process)
+
+            if (current_process[0]==0):
+                completion_time=current_time
+                l=[int(current_process[2]),int(completion_time)]
+                CT.append(l)
+                continue
+
+            else:
+                PATBT.append(current_process)
+    CT.reverse()
+    CT1=CT[0:n]
+    CT1.sort()
+    for i in range(n):
+        print(CT1[i][1],end=" ")
+    print()
+    for i in range(n):
+        TAT[i]=CT1[i][1]-BTATP[i][1]
+    
+    for i in range(n):
+        print(TAT[i],end=" ")
+    print()
+    for i in range(n):
+        WT[i]=TAT[i]-BT[i]
+            
+    for i in range(n):
+        print(WT[i],end=" ")
+
+    tCT=tTAT=tWT=0
+    for i in range(n):
+        tCT=tCT+CT[i][1]
+        tTAT=tTAT+TAT[i]
+        tWT=tWT+WT[i]
+
+    print()
+    print(round((tCT/n),2))
+    print(round((tTAT/n),2))
+    print(round((tWT/n),2))
+
+def lrtf():
+    n=int(input(""))
+
+    PATBT=[]
+
+    for i in range(n):
+        a=int(input(""))
+        b=int(input(""))
+        l=[int(a),int(b),int(i)]
+        PATBT.append(l)             #[BT,AT,id]
+
+    BT=[]
+    for i in range(n):
+        BT.append(PATBT[i][0])
+    BTATP=list(PATBT)
+    CT=[[0,0]]*n
+    TAT=[0]*n
+    WT=[0]*n
+    current_time=0
+
+    while (PATBT != []):
+        available=[]
+        for i in PATBT:
+            if (i[1]<=current_time):
+                available.append(i)
+
+        if (available==[]):
+            current_time=current_time+1
+            continue
+
+        else:
+            available.sort(reverse=True)            #sorting on the basis of BT.
+        
+            current_process=available[0]
+            copy_current_process=available.pop(0)
+            current_time=current_time+1
+            current_process[0]=current_process[0]-1
+            PATBT.remove(copy_current_process)
+
+            if (current_process[0]==0):
+                completion_time=current_time
+                l=[int(current_process[2]),int(completion_time)]
+                CT.append(l)
+                continue
+
+            else:
+                PATBT.append(current_process)
+    CT.reverse()
+    CT1=CT[0:n]
+    CT1.sort()
+    for i in range(n):
+        print(CT1[i][1],end=" ")
+    print()
+    for i in range(n):
+        TAT[i]=CT1[i][1]-BTATP[i][1]
+    
+    for i in range(n):
+        print(TAT[i],end=" ")
+    print()
+    for i in range(n):
+        WT[i]=TAT[i]-BT[i]
+            
+    for i in range(n):
+        print(WT[i],end=" ")
+
+    tCT=tTAT=tWT=0
+    for i in range(n):
+        tCT=tCT+CT[i][1]
+        tTAT=tTAT+TAT[i]
+        tWT=tWT+WT[i]
+
+    print()
+    print(round((tCT/n),2))
+    print(round((tTAT/n),2))
+    print(round((tWT/n),2))
+
+def rr():
+    n=int(input(""))
+    TQ=int(input(""))                      #enter time quantum
+    PATBT=[]
+
+    for i in range(n):
+        a=int(input(""))
+        b=int(input(""))
+        l=[int(i),int(a),int(b)]
+        PATBT.append(l)
+    PATBT1=PATBT.copy()
+    for i in range(n):
+        for j in range(n-i-1):
+            if PATBT[j][1]>PATBT[j+1][1]:
+                PATBT[j][0],PATBT[j+1][0]=PATBT[j+1][0],PATBT[j][0]
+                PATBT[j][1],PATBT[j+1][1]=PATBT[j+1][1],PATBT[j][1]
+                PATBT[j][2],PATBT[j+1][2]=PATBT[j+1][2],PATBT[j][2]
+
+    BT=[]
+    for i in range(n):
+        BT.append(PATBT[i][2])
+    CT=[[0,0]]*n
+    TAT=[0]*n
+    WT=[0]*n
+    current_time=0
+
+    while (PATBT != []):
+        available=[]
+        for i in PATBT:
+            if (i[1]<=current_time):
+                available.append(i)
+
+        if (available==[]):
+            current_time=current_time+1
+            continue
+
+        else: 
+            current_process=available[0]
+            copy_current_process=available.pop(0)
+            if (current_process[2]<TQ):
+                current_time+=current_process[2]
+                current_process[2]=0
+            else:
+                current_time+=TQ
+                current_process[2]-=TQ
+            PATBT.remove(copy_current_process)
+
+            if (current_process[2]==0):
+                completion_time=current_time
+                l=[int(current_process[0]),int(completion_time)]
+                CT.append(l)
+                continue
+            else:
+                PATBT.append(current_process)
+
+    CT.reverse()
+    CT1=CT[0:n]
+    CT1.sort()
+
+    for i in range(n):
+        print(CT1[i][1],end=" ")
+
+    print()
+    for i in range(n):
+        TAT[i]=CT1[i][1]-PATBT1[i][1]
+    
+    for i in range(n):
+        print(TAT[i],end=" ")
+    print()
+    for i in range(n):
+        WT[i]=TAT[i]-BT[i]
+
+    for i in range(n):
+        print(WT[i],end=" ")
+
+    tCT=tTAT=tWT=0
+    for i in range(n):
+        tCT=tCT+CT[i][1]
+        tTAT=tTAT+TAT[i]
+        tWT=tWT+WT[i]
+
+    print()
+    print(round((tCT/n),2))
+    print(round((tTAT/n),2))
+    print(round((tWT/n),2))
+
+#main function starts
+
+n=int(input(""))       #enter a number from 1 to 5 
+if n==1:
+    sjf()
+elif n==2:
+    ljf()
+elif n==3:
+    srtf()
+elif n==4:
+    lrtf()
+elif n==5:
+    rr()
+else:
+    raise Exception("invalid entry")
